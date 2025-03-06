@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  yumemi-mysql:
+    image: mysql:latest
+    container_name: yumemi-mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: yumemi
+      MYSQL_USER: yumemi
+      MYSQL_PASSWORD: secretpassword
+    ports:
+      - "127.0.0.1:3316:3306"
+    volumes:
+      - yumemi_mysql_data:/var/lib/mysql
+  yumemi-redis:
+    image: redis:7.2
+    restart: always
+    container_name: yumemi-redis
+    ports:
+      - "127.0.0.1:6389:6379"
+    command: redis-server --save 60 1 --loglevel warning --requirepass yumemipassword
+    volumes:
+      - veil_redis_data:/data
+
+volumes:
+  yumemi_mysql_data:
+  yumemi_redis_data:
+
