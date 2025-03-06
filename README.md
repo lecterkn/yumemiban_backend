@@ -10,7 +10,7 @@
 
 ## プロジェクト構成
 
-[アーキテクチャについて](./docs/architecture.md)
+[アーキテクチャについて](./docs/arch.md)
 
 ```
 root
@@ -18,6 +18,8 @@ root
 |  dbconfig.yml # マイグレーション時に参照するデータベースの接続情報
 |
 |- docs # readmeから派生したドキュメントやswagger
+|  | arch.md      # アーキテクチャについて
+|  | startup.md   # 環境構築手順書
 |  | swagger.yaml # swaggerのyaml形式のドキュメント
 |  | swagger.json # swaggerのjson形式のドキュメント
 |
@@ -42,4 +44,3 @@ root
 |  | ...
 |
 ```
-
