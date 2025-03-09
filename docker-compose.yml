@@ -20,7 +20,7 @@ services:
       - "127.0.0.1:6389:6379"
     command: redis-server --save 60 1 --loglevel warning --requirepass yumemipassword
     volumes:
-      - veil_redis_data:/data
+      - yumemi_redis_data:/data
 
 volumes:
   yumemi_mysql_data:
