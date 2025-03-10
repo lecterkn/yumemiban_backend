@@ -27,9 +27,13 @@ func InitializeHandlerSet() *HandlerSet {
 	tokenRepository := redis.NewTokenRepositoryImpl(client)
 	userUsecase := usecase.NewUserUsecase(transactionProvider, userRepository, tokenRepository)
 	userHandler := handler.NewUserHandler(userUsecase)
+	postRepository := mysql.NewPostRepositoryImpl(db)
+	postUsecase := usecase.NewPostUsecase(transactionProvider, postRepository, userRepository)
+	postHandler := handler.NewPostHandler(postUsecase)
 	jwtMiddleware := handler.NewJWTMiddleware()
 	diHandlerSet := &HandlerSet{
 		UserHandler:   userHandler,
+		PostHandler:   postHandler,
 		JWTMiddleware: jwtMiddleware,
 	}
 	return diHandlerSet
@@ -41,19 +45,20 @@ func InitializeHandlerSet() *HandlerSet {
 var databaseSet = wire.NewSet(database.GetMySQLConnection, database.GetRedisClient)
 
 // リポジトリの実装
-var repositorySet = wire.NewSet(mysql.NewUserRepositoryImpl, redis.NewTokenRepositoryImpl)
+var repositorySet = wire.NewSet(mysql.NewUserRepositoryImpl, mysql.NewPostRepositoryImpl, redis.NewTokenRepositoryImpl)
 
 // プロバイダの実装
 var providerSet = wire.NewSet(provider.NewTransactionProviderImpl)
 
 // ユースケース
-var usecaseSet = wire.NewSet(usecase.NewUserUsecase)
+var usecaseSet = wire.NewSet(usecase.NewUserUsecase, usecase.NewPostUsecase)
 
 // ハンドラ
-var handlerSet = wire.NewSet(handler.NewUserHandler, handler.NewJWTMiddleware)
+var handlerSet = wire.NewSet(handler.NewUserHandler, handler.NewPostHandler, handler.NewJWTMiddleware)
 
 // 生成されるハンドラ
 type HandlerSet struct {
 	UserHandler   *handler.UserHandler
+	PostHandler   *handler.PostHandler
 	JWTMiddleware *handler.JWTMiddleware
 }

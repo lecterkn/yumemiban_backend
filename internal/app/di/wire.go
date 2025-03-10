@@ -22,6 +22,7 @@ var databaseSet = wire.NewSet(
 // リポジトリの実装
 var repositorySet = wire.NewSet(
 	mysql.NewUserRepositoryImpl,
+	mysql.NewPostRepositoryImpl,
 	redis.NewTokenRepositoryImpl,
 )
 
@@ -33,17 +34,20 @@ var providerSet = wire.NewSet(
 // ユースケース
 var usecaseSet = wire.NewSet(
 	usecase.NewUserUsecase,
+	usecase.NewPostUsecase,
 )
 
 // ハンドラ
 var handlerSet = wire.NewSet(
 	handler.NewUserHandler,
+	handler.NewPostHandler,
 	handler.NewJWTMiddleware,
 )
 
 // 生成されるハンドラ
 type HandlerSet struct {
 	UserHandler   *handler.UserHandler
+	PostHandler   *handler.PostHandler
 	JWTMiddleware *handler.JWTMiddleware
 }
 

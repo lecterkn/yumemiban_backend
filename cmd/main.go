@@ -5,7 +5,9 @@ import (
 
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
+	_ "github.com/lecterkn/yumemiban_backend/docs"
 	"github.com/lecterkn/yumemiban_backend/internal/app/di"
+	echoSwagger "github.com/swaggo/echo-swagger"
 )
 
 func main() {
@@ -23,7 +25,19 @@ func main() {
 }
 
 // エンドポイントのルーティング
+//
+//	@title						yumemi backend API
+//	@version					1.0
+//	@description				YumemibanのAPIサーバー
+//	@host						http://localhost:8089
+//	@BasePath					/api
+//	@securityDefinitions.apikey	BearerAuth
+//	@in							header
+//	@name						Authorization
 func setRouting(app *echo.Echo) {
+	// swagger
+	app.GET("/swagger/*", echoSwagger.WrapHandler)
+
 	handlerSet := di.InitializeHandlerSet()
 
 	// /api
@@ -33,6 +47,8 @@ func setRouting(app *echo.Echo) {
 	api.POST("/signup", handlerSet.UserHandler.Create)
 
 	// 認証対象グループ
-	auth := app.Group("")
+	auth := api.Group("")
 	auth.Use(handlerSet.JWTMiddleware.Authorization)
+
+	auth.POST("/posts", handlerSet.PostHandler.Create)
 }

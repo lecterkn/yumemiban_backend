@@ -1,0 +1,111 @@
+basePath: /api
+definitions:
+  request.PostCreateRequest:
+    properties:
+      content:
+        type: string
+      nickname:
+        type: string
+      novel:
+        type: string
+    required:
+    - content
+    - nickname
+    - novel
+    type: object
+  response.PostCreateResponse:
+    properties:
+      content:
+        type: string
+      createdAt:
+        type: string
+      id:
+        type: string
+      nickname:
+        type: string
+      novel:
+        type: string
+      updatedAt:
+        type: string
+      userId:
+        type: string
+    required:
+    - content
+    - createdAt
+    - id
+    - nickname
+    - novel
+    - updatedAt
+    - userId
+    type: object
+  response.UserSignupResponse:
+    properties:
+      accessToken:
+        type: string
+      createdAt:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      password:
+        type: string
+      refreshToken:
+        type: string
+      updatedAt:
+        type: string
+    required:
+    - accessToken
+    - createdAt
+    - id
+    - name
+    - password
+    - refreshToken
+    - updatedAt
+    type: object
+host: http://localhost:8089
+info:
+  contact: {}
+  description: YumemibanのAPIサーバー
+  title: yumemi backend API
+  version: "1.0"
+paths:
+  /posts:
+    post:
+      description: 投稿を新規作成する
+      parameters:
+      - description: 投稿作成リクエスト
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/request.PostCreateRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.PostCreateResponse'
+      summary: CreatePost
+      tags:
+      - post
+  /signup:
+    post:
+      description: ユーザーを新規作成する
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.UserSignupResponse'
+      summary: CreateUser
+      tags:
+      - user
+securityDefinitions:
+  BearerAuth:
+    in: header
+    name: Authorization
+    type: apiKey
+swagger: "2.0"
