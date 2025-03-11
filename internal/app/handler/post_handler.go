@@ -55,3 +55,31 @@ func (h *PostHandler) Create(ctx echo.Context) error {
 	}
 	return ctx.JSON(http.StatusOK, response.PostCreateResponse(*output))
 }
+
+// @summary		LikePost
+// @description	投稿にいいねをつける
+// @tags			post
+// @success		204
+// @router			/posts/:postId/likes [post]
+func (h *PostHandler) Like(ctx echo.Context) error {
+	// ユーザーID取得
+	userId, err := uuid.Parse(ctx.Get("userId").(string))
+	if err != nil {
+		return ctx.JSON(http.StatusInternalServerError, response.ErrorResponse{
+			Message: err.Error(),
+		})
+	}
+	postId, err := uuid.Parse(ctx.Param("postId"))
+	if err != nil {
+		return ctx.JSON(http.StatusBadRequest, response.ErrorResponse{
+			Message: "投稿IDが不正です",
+		})
+	}
+	err = h.postUsecase.LikePost(postId, userId)
+	if err != nil {
+		return ctx.JSON(http.StatusInternalServerError, response.ErrorResponse{
+			Message: err.Error(),
+		})
+	}
+	return ctx.NoContent(http.StatusNoContent)
+}

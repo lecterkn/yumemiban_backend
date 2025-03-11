@@ -31,3 +31,15 @@ func NewPostEntity(userId uuid.UUID, nickname, content, novel string) (*PostEnti
 		UpdatedAt: time.Now(),
 	}, nil
 }
+
+type PostLikeEntity struct {
+	PostId uuid.UUID
+	UserId uuid.UUID
+}
+
+func NewPostLikeEntity(postId, userId uuid.UUID) *PostLikeEntity {
+	return &PostLikeEntity{
+		PostId: postId,
+		UserId: userId,
+	}
+}

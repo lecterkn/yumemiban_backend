@@ -90,6 +90,15 @@ paths:
       summary: CreatePost
       tags:
       - post
+  /posts/:postId/likes:
+    post:
+      description: 投稿にいいねをつける
+      responses:
+        "204":
+          description: No Content
+      summary: LikePost
+      tags:
+      - post
   /signup:
     post:
       description: ユーザーを新規作成する
