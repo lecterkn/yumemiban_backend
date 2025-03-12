@@ -20,11 +20,12 @@ func NewUserHandler(userUsecase *usecase.UserUsecase) *UserHandler {
 	}
 }
 
-// @summary	ユーザーを作成する
-// @tags		user
-// @produce	json
-// @success	200		{object}	response.UserSignupResponse
-// @router		/signin [post]
+// @summary		CreateUser
+// @description	ユーザーを新規作成する
+// @tags			user
+// @produce		json
+// @success		200	{object}	response.UserSignupResponse
+// @router			/signup [post]
 func (h *UserHandler) Create(ctx echo.Context) error {
 	// ランダムなユーザー名とパスワードでユーザーを新規作成
 	output, err := h.userUsecase.CreateUser(
