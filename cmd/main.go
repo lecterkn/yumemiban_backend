@@ -46,6 +46,9 @@ func setRouting(app *echo.Echo) {
 	// /api/signup
 	api.POST("/signup", handlerSet.UserHandler.Create)
 
+	// /api/discover/latest
+	api.GET("/discover/latest", handlerSet.DiscoverHandler.Latest)
+
 	// 認証対象グループ
 	auth := api.Group("")
 	auth.Use(handlerSet.JWTMiddleware.Authorization)

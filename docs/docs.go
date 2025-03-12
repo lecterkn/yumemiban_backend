@@ -15,6 +15,34 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
+        "/discover/latest": {
+            "get": {
+                "description": "最新の投稿を一覧取得する",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "discover"
+                ],
+                "summary": "GetLatest",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "最後の投稿ID",
+                        "name": "lastId",
+                        "in": "query"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.DiscoverLatestResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/posts": {
             "post": {
                 "description": "投稿を新規作成する",
@@ -46,13 +74,22 @@ const docTemplate = `{
                 }
             }
         },
-        "/posts/:postId/likes": {
+        "/posts/{postId}/likes": {
             "post": {
                 "description": "投稿にいいねをつける",
                 "tags": [
                     "post"
                 ],
                 "summary": "LikePost",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "投稿ID",
+                        "name": "postId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
                 "responses": {
                     "204": {
                         "description": "No Content"
@@ -97,6 +134,59 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "novel": {
+                    "type": "string"
+                }
+            }
+        },
+        "response.DiscoverLatestResponse": {
+            "type": "object",
+            "required": [
+                "list"
+            ],
+            "properties": {
+                "list": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/response.DiscoverResponse"
+                    }
+                }
+            }
+        },
+        "response.DiscoverResponse": {
+            "type": "object",
+            "required": [
+                "content",
+                "createdAt",
+                "id",
+                "likes",
+                "nickname",
+                "novel",
+                "updatedAt",
+                "userId"
+            ],
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "likes": {
+                    "type": "integer"
+                },
+                "nickname": {
+                    "type": "string"
+                },
+                "novel": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string"
+                },
+                "userId": {
                     "type": "string"
                 }
             }

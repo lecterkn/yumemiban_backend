@@ -35,20 +35,23 @@ var providerSet = wire.NewSet(
 var usecaseSet = wire.NewSet(
 	usecase.NewUserUsecase,
 	usecase.NewPostUsecase,
+	usecase.NewDiscoverUsecase,
 )
 
 // ハンドラ
 var handlerSet = wire.NewSet(
 	handler.NewUserHandler,
 	handler.NewPostHandler,
+	handler.NewDiscoverHandler,
 	handler.NewJWTMiddleware,
 )
 
 // 生成されるハンドラ
 type HandlerSet struct {
-	UserHandler   *handler.UserHandler
-	PostHandler   *handler.PostHandler
-	JWTMiddleware *handler.JWTMiddleware
+	UserHandler     *handler.UserHandler
+	PostHandler     *handler.PostHandler
+	DiscoverHandler *handler.DiscoverHandler
+	JWTMiddleware   *handler.JWTMiddleware
 }
 
 // ハンドラセットを取得する
