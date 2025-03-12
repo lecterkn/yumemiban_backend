@@ -30,11 +30,14 @@ func InitializeHandlerSet() *HandlerSet {
 	postRepository := mysql.NewPostRepositoryImpl(db)
 	postUsecase := usecase.NewPostUsecase(transactionProvider, postRepository, userRepository)
 	postHandler := handler.NewPostHandler(postUsecase)
+	discoverUsecase := usecase.NewDiscoverUsecase(postRepository)
+	discoverHandler := handler.NewDiscoverHandler(discoverUsecase)
 	jwtMiddleware := handler.NewJWTMiddleware()
 	diHandlerSet := &HandlerSet{
-		UserHandler:   userHandler,
-		PostHandler:   postHandler,
-		JWTMiddleware: jwtMiddleware,
+		UserHandler:     userHandler,
+		PostHandler:     postHandler,
+		DiscoverHandler: discoverHandler,
+		JWTMiddleware:   jwtMiddleware,
 	}
 	return diHandlerSet
 }
@@ -51,14 +54,15 @@ var repositorySet = wire.NewSet(mysql.NewUserRepositoryImpl, mysql.NewPostReposi
 var providerSet = wire.NewSet(provider.NewTransactionProviderImpl)
 
 // ユースケース
-var usecaseSet = wire.NewSet(usecase.NewUserUsecase, usecase.NewPostUsecase)
+var usecaseSet = wire.NewSet(usecase.NewUserUsecase, usecase.NewPostUsecase, usecase.NewDiscoverUsecase)
 
 // ハンドラ
-var handlerSet = wire.NewSet(handler.NewUserHandler, handler.NewPostHandler, handler.NewJWTMiddleware)
+var handlerSet = wire.NewSet(handler.NewUserHandler, handler.NewPostHandler, handler.NewDiscoverHandler, handler.NewJWTMiddleware)
 
 // 生成されるハンドラ
 type HandlerSet struct {
-	UserHandler   *handler.UserHandler
-	PostHandler   *handler.PostHandler
-	JWTMiddleware *handler.JWTMiddleware
+	UserHandler     *handler.UserHandler
+	PostHandler     *handler.PostHandler
+	DiscoverHandler *handler.DiscoverHandler
+	JWTMiddleware   *handler.JWTMiddleware
 }

@@ -13,6 +13,43 @@ definitions:
     - nickname
     - novel
     type: object
+  response.DiscoverLatestResponse:
+    properties:
+      list:
+        items:
+          $ref: '#/definitions/response.DiscoverResponse'
+        type: array
+    required:
+    - list
+    type: object
+  response.DiscoverResponse:
+    properties:
+      content:
+        type: string
+      createdAt:
+        type: string
+      id:
+        type: string
+      likes:
+        type: integer
+      nickname:
+        type: string
+      novel:
+        type: string
+      updatedAt:
+        type: string
+      userId:
+        type: string
+    required:
+    - content
+    - createdAt
+    - id
+    - likes
+    - nickname
+    - novel
+    - updatedAt
+    - userId
+    type: object
   response.PostCreateResponse:
     properties:
       content:
@@ -70,6 +107,24 @@ info:
   title: yumemi backend API
   version: "1.0"
 paths:
+  /discover/latest:
+    get:
+      description: 最新の投稿を一覧取得する
+      parameters:
+      - description: 最後の投稿ID
+        in: query
+        name: lastId
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.DiscoverLatestResponse'
+      summary: GetLatest
+      tags:
+      - discover
   /posts:
     post:
       description: 投稿を新規作成する
@@ -90,9 +145,15 @@ paths:
       summary: CreatePost
       tags:
       - post
-  /posts/:postId/likes:
+  /posts/{postId}/likes:
     post:
       description: 投稿にいいねをつける
+      parameters:
+      - description: 投稿ID
+        in: path
+        name: postId
+        required: true
+        type: string
       responses:
         "204":
           description: No Content

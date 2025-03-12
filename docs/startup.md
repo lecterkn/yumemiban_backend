@@ -13,6 +13,18 @@
 go install github.com/rubenv/sql-migrate/...@latest
 ```
 
+### swag をインストール
+
+```sh
+go install github.com/swaggo/swag/cmd/swag@latest
+```
+
+### wire をインストール
+
+```sh
+go install github.com/google/wire/cmd/wire@latest
+```
+
 ### 環境設定ファイルを配置
 
 ```sh

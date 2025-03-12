@@ -25,7 +25,7 @@ func NewPostHandler(postUsecase *usecase.PostUsecase) *PostHandler {
 // @description	投稿を新規作成する
 // @tags			post
 // @produce		json
-// @param			request	body		request.PostCreateRequest	true "投稿作成リクエスト"
+// @param			request	body		request.PostCreateRequest	true	"投稿作成リクエスト"
 // @success		200		{object}	response.PostCreateResponse
 // @router			/posts [post]
 func (h *PostHandler) Create(ctx echo.Context) error {
@@ -59,8 +59,9 @@ func (h *PostHandler) Create(ctx echo.Context) error {
 // @summary		LikePost
 // @description	投稿にいいねをつける
 // @tags			post
+// @param			postId	path	string	true	"投稿ID"
 // @success		204
-// @router			/posts/:postId/likes [post]
+// @router			/posts/{postId}/likes [post]
 func (h *PostHandler) Like(ctx echo.Context) error {
 	// ユーザーID取得
 	userId, err := uuid.Parse(ctx.Get("userId").(string))

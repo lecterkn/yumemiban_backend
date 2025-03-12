@@ -28,6 +28,7 @@ func NewPostUsecase(
 	}
 }
 
+// 投稿を新規作成する
 func (u *PostUsecase) CreatePost(userId uuid.UUID, cmd input.PostUsecaseCreateInput) (*output.PostUsecaseCreateOutput, error) {
 	postOutput := output.PostUsecaseCreateOutput{}
 	// トランザクション
@@ -53,6 +54,7 @@ func (u *PostUsecase) CreatePost(userId uuid.UUID, cmd input.PostUsecaseCreateIn
 	return &postOutput, err
 }
 
+// 投稿にいいねをする
 func (u *PostUsecase) LikePost(postId, userId uuid.UUID) error {
 	return u.txProvider.Transact(func(ctx context.Context) error {
 		// 投稿存在確認
