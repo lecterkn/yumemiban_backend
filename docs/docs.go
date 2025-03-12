@@ -46,6 +46,20 @@ const docTemplate = `{
                 }
             }
         },
+        "/posts/:postId/likes": {
+            "post": {
+                "description": "投稿にいいねをつける",
+                "tags": [
+                    "post"
+                ],
+                "summary": "LikePost",
+                "responses": {
+                    "204": {
+                        "description": "No Content"
+                    }
+                }
+            }
+        },
         "/signup": {
             "post": {
                 "description": "ユーザーを新規作成する",

@@ -52,3 +52,21 @@ func (u *PostUsecase) CreatePost(userId uuid.UUID, cmd input.PostUsecaseCreateIn
 	})
 	return &postOutput, err
 }
+
+func (u *PostUsecase) LikePost(postId, userId uuid.UUID) error {
+	return u.txProvider.Transact(func(ctx context.Context) error {
+		// 投稿存在確認
+		_, err := u.postRepository.FindById(ctx, postId)
+		if err != nil {
+			return err
+		}
+		// ユーザー存在確認
+		_, err = u.userRepository.FindById(ctx, userId)
+		if err != nil {
+			return err
+		}
+		// いいね作成
+		postLikeEntity := entity.NewPostLikeEntity(postId, userId)
+		return u.postRepository.LikePost(ctx, postLikeEntity)
+	})
+}

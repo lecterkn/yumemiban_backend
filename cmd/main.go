@@ -51,4 +51,5 @@ func setRouting(app *echo.Echo) {
 	auth.Use(handlerSet.JWTMiddleware.Authorization)
 
 	auth.POST("/posts", handlerSet.PostHandler.Create)
+	auth.POST("/posts/:postId/likes", handlerSet.PostHandler.Like)
 }
