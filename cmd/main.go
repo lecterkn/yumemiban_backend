@@ -5,6 +5,7 @@ import (
 
 	"github.com/joho/godotenv"
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 	_ "github.com/lecterkn/yumemiban_backend/docs"
 	"github.com/lecterkn/yumemiban_backend/internal/app/di"
 	echoSwagger "github.com/swaggo/echo-swagger"
@@ -35,6 +36,9 @@ func main() {
 //	@in							header
 //	@name						Authorization
 func setRouting(app *echo.Echo) {
+	// CORS
+	app.Use(middleware.CORS())
+
 	// swagger
 	app.GET("/swagger/*", echoSwagger.WrapHandler)
 
