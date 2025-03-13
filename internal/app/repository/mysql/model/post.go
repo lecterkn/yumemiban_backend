@@ -6,6 +6,7 @@ type PostModel struct {
 	Id        []byte    `db:"id"`
 	UserId    []byte    `db:"user_id"`
 	Nickname  string    `db:"nickname"`
+	Title     string    `db:"title"`
 	Content   string    `db:"content"`
 	Novel     string    `db:"novel"`
 	CreatedAt time.Time `db:"created_at"`
@@ -21,6 +22,7 @@ type PostQueryModel struct {
 	Id        []byte    `db:"id"`
 	UserId    []byte    `db:"user_id"`
 	Nickname  string    `db:"nickname"`
+	Title     string    `db:"title"`
 	Content   string    `db:"content"`
 	Novel     string    `db:"novel"`
 	Likes     int       `db:"likes"`

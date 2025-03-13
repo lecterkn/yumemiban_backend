@@ -10,13 +10,14 @@ type PostEntity struct {
 	Id        uuid.UUID
 	UserId    uuid.UUID
 	Nickname  string
+	Title     string
 	Content   string
 	Novel     string
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
 
-func NewPostEntity(userId uuid.UUID, nickname, content, novel string) (*PostEntity, error) {
+func NewPostEntity(userId uuid.UUID, nickname, title, content, novel string) (*PostEntity, error) {
 	id, err := uuid.NewV7()
 	if err != nil {
 		return nil, err
@@ -25,6 +26,7 @@ func NewPostEntity(userId uuid.UUID, nickname, content, novel string) (*PostEnti
 		Id:        id,
 		UserId:    userId,
 		Nickname:  nickname,
+		Title:     title,
 		Content:   content,
 		Novel:     novel,
 		CreatedAt: time.Now(),

@@ -23,14 +23,15 @@ func NewPostRepositoryImpl(database *sqlx.DB) port.PostRepository {
 
 func (r *PostRepositoryImpl) Create(ctx context.Context, postEntity *entity.PostEntity) error {
 	query := `
-        INSERT INTO posts(id, user_id, nickname, content, novel, created_at, updated_at)
-        VALUES(:id, :userId, :nickname, :content, :novel, :createdAt, :updatedAt)
+        INSERT INTO posts(id, user_id, nickname, title, content, novel, created_at, updated_at)
+        VALUES(:id, :userId, :nickname, :content, :title, :novel, :createdAt, :updatedAt)
     `
 	return RunInTx(ctx, r.database, func(tx *sqlx.Tx) error {
 		_, err := tx.NamedExec(query, map[string]any{
 			"id":        postEntity.Id[:],
 			"userId":    postEntity.UserId[:],
 			"nickname":  postEntity.Nickname,
+			"title":     postEntity.Title,
 			"content":   postEntity.Content,
 			"novel":     postEntity.Novel,
 			"createdAt": postEntity.CreatedAt,
@@ -43,7 +44,7 @@ func (r *PostRepositoryImpl) Create(ctx context.Context, postEntity *entity.Post
 // 最新の投稿をシーク法によるページネーションをして取得
 func (r *PostRepositoryImpl) FindLatestByLastId(ctx context.Context, lastId *uuid.UUID) ([]output.DiscoverUsecaseQueryOutput, error) {
 	query := `
-        SELECT posts.id, posts.user_id, posts.nickname, posts.content, posts.novel, posts.created_at, posts.updated_at, 
+        SELECT posts.id, posts.user_id, posts.nickname, posts.title, posts.content, posts.novel, posts.created_at, posts.updated_at, 
             COUNT(post_likes.user_id) as likes
         FROM posts
         LEFT JOIN post_likes
@@ -86,7 +87,7 @@ func (r *PostRepositoryImpl) FindLatestByLastId(ctx context.Context, lastId *uui
 // 投稿をIDから取得
 func (r *PostRepositoryImpl) FindById(ctx context.Context, id uuid.UUID) (*entity.PostEntity, error) {
 	query := `
-        SELECT id, user_id, nickname, content, novel, created_at, updated_at
+        SELECT id, user_id, nickname, title, content, novel, created_at, updated_at
         FROM posts
         WHERE id = ?
         LIMIT 1
@@ -136,6 +137,7 @@ func (r *PostRepositoryImpl) toEntity(postModel *model.PostModel) (*entity.PostE
 		Id:        id,
 		UserId:    userId,
 		Nickname:  postModel.Nickname,
+		Title:     postModel.Title,
 		Content:   postModel.Content,
 		Novel:     postModel.Novel,
 		CreatedAt: postModel.CreatedAt,
@@ -156,6 +158,7 @@ func (r *PostRepositoryImpl) toOutput(queryModel *model.PostQueryModel) (*output
 		Id:        id,
 		UserId:    userId,
 		Nickname:  queryModel.Nickname,
+		Title:     queryModel.Title,
 		Content:   queryModel.Content,
 		Novel:     queryModel.Novel,
 		Likes:     queryModel.Likes,
