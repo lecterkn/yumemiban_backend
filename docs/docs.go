@@ -124,7 +124,8 @@ const docTemplate = `{
             "required": [
                 "content",
                 "nickname",
-                "novel"
+                "novel",
+                "title"
             ],
             "properties": {
                 "content": {
@@ -134,6 +135,9 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "novel": {
+                    "type": "string"
+                },
+                "title": {
                     "type": "string"
                 }
             }
@@ -161,6 +165,7 @@ const docTemplate = `{
                 "likes",
                 "nickname",
                 "novel",
+                "title",
                 "updatedAt",
                 "userId"
             ],
@@ -183,6 +188,9 @@ const docTemplate = `{
                 "novel": {
                     "type": "string"
                 },
+                "title": {
+                    "type": "string"
+                },
                 "updatedAt": {
                     "type": "string"
                 },
@@ -199,6 +207,7 @@ const docTemplate = `{
                 "id",
                 "nickname",
                 "novel",
+                "title",
                 "updatedAt",
                 "userId"
             ],
@@ -216,6 +225,9 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "novel": {
+                    "type": "string"
+                },
+                "title": {
                     "type": "string"
                 },
                 "updatedAt": {

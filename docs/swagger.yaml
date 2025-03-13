@@ -8,10 +8,13 @@ definitions:
         type: string
       novel:
         type: string
+      title:
+        type: string
     required:
     - content
     - nickname
     - novel
+    - title
     type: object
   response.DiscoverLatestResponse:
     properties:
@@ -36,6 +39,8 @@ definitions:
         type: string
       novel:
         type: string
+      title:
+        type: string
       updatedAt:
         type: string
       userId:
@@ -47,6 +52,7 @@ definitions:
     - likes
     - nickname
     - novel
+    - title
     - updatedAt
     - userId
     type: object
@@ -62,6 +68,8 @@ definitions:
         type: string
       novel:
         type: string
+      title:
+        type: string
       updatedAt:
         type: string
       userId:
@@ -72,6 +80,7 @@ definitions:
     - id
     - nickname
     - novel
+    - title
     - updatedAt
     - userId
     type: object
