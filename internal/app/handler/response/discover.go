@@ -14,6 +14,7 @@ type DiscoverResponse struct {
 	Id        uuid.UUID `json:"id" validate:"required"`
 	UserId    uuid.UUID `json:"userId" validate:"required"`
 	Nickname  string    `json:"nickname" validate:"required"`
+	Title     string    `json:"title" validate:"required"`
 	Content   string    `json:"content" validate:"required"`
 	Novel     string    `json:"novel" validate:"required"`
 	Likes     int       `json:"likes" validate:"required"`

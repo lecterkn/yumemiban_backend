@@ -14,6 +14,7 @@ type DiscoverUsecaseQueryOutput struct {
 	Id        uuid.UUID
 	UserId    uuid.UUID
 	Nickname  string
+	Title     string
 	Content   string
 	Novel     string
 	Likes     int

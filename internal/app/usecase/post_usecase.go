@@ -39,7 +39,7 @@ func (u *PostUsecase) CreatePost(userId uuid.UUID, cmd input.PostUsecaseCreateIn
 			return err
 		}
 		// 投稿作成
-		postEntity, err := entity.NewPostEntity(userEntity.Id, cmd.Nickname, cmd.Content, cmd.Novel)
+		postEntity, err := entity.NewPostEntity(userEntity.Id, cmd.Nickname, cmd.Title, cmd.Content, cmd.Novel)
 		if err != nil {
 			return err
 		}
