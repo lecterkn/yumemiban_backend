@@ -118,7 +118,8 @@
             "required": [
                 "content",
                 "nickname",
-                "novel"
+                "novel",
+                "title"
             ],
             "properties": {
                 "content": {
@@ -128,6 +129,9 @@
                     "type": "string"
                 },
                 "novel": {
+                    "type": "string"
+                },
+                "title": {
                     "type": "string"
                 }
             }
@@ -155,6 +159,7 @@
                 "likes",
                 "nickname",
                 "novel",
+                "title",
                 "updatedAt",
                 "userId"
             ],
@@ -177,6 +182,9 @@
                 "novel": {
                     "type": "string"
                 },
+                "title": {
+                    "type": "string"
+                },
                 "updatedAt": {
                     "type": "string"
                 },
@@ -193,6 +201,7 @@
                 "id",
                 "nickname",
                 "novel",
+                "title",
                 "updatedAt",
                 "userId"
             ],
@@ -210,6 +219,9 @@
                     "type": "string"
                 },
                 "novel": {
+                    "type": "string"
+                },
+                "title": {
                     "type": "string"
                 },
                 "updatedAt": {
