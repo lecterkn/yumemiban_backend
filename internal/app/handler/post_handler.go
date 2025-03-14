@@ -62,6 +62,28 @@ func (h *PostHandler) Create(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, response.PostCreateResponse(*output))
 }
 
+//	@summary		GetPost
+//	@description	投稿詳細を取得する
+//	@tags			post
+//	@param			postId	path		string	true	"投稿ID"
+//	@success		200		{object}	response.PostResponse
+//	@router			/posts/{postId} [get]
+func (h *PostHandler) Get(ctx echo.Context) error {
+	postId, err := uuid.Parse(ctx.Param("postId"))
+	if err != nil {
+		return ctx.JSON(http.StatusBadRequest, response.ErrorResponse{
+			Message: "投稿IDが不正です",
+		})
+	}
+	output, err := h.postUsecase.GetPostById(postId)
+	if err != nil {
+		return ctx.JSON(http.StatusInternalServerError, response.ErrorResponse{
+			Message: err.Error(),
+		})
+	}
+	return ctx.JSON(http.StatusOK, response.PostResponse(*output))
+}
+
 //	@summary		LikePost
 //	@description	投稿にいいねをつける
 //	@tags			post

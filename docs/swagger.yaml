@@ -98,6 +98,34 @@ definitions:
     - updatedAt
     - userId
     type: object
+  response.PostResponse:
+    properties:
+      content:
+        type: string
+      createdAt:
+        type: string
+      id:
+        type: string
+      nickname:
+        type: string
+      novel:
+        type: string
+      title:
+        type: string
+      updatedAt:
+        type: string
+      userId:
+        type: string
+    required:
+    - content
+    - createdAt
+    - id
+    - nickname
+    - novel
+    - title
+    - updatedAt
+    - userId
+    type: object
   response.UserSignupResponse:
     properties:
       accessToken:
@@ -190,6 +218,23 @@ paths:
       security:
       - BearerAuth: []
       summary: CreatePost
+      tags:
+      - post
+  /posts/{postId}:
+    get:
+      description: 投稿詳細を取得する
+      parameters:
+      - description: 投稿ID
+        in: path
+        name: postId
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/response.PostResponse'
+      summary: GetPost
       tags:
       - post
   /posts/{postId}/likes:

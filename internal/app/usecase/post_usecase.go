@@ -72,3 +72,12 @@ func (u *PostUsecase) LikePost(postId, userId uuid.UUID) error {
 		return u.postRepository.LikePost(ctx, postLikeEntity)
 	})
 }
+
+func (u *PostUsecase) GetPostById(postId uuid.UUID) (*output.PostUsecaseOutput, error) {
+	postEntity, err := u.postRepository.FindById(context.Background(), postId)
+	if err != nil {
+		return nil, err
+	}
+	postOutput := output.PostUsecaseOutput(*postEntity)
+	return &postOutput, nil
+}
