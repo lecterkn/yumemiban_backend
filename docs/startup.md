@@ -2,7 +2,7 @@
 
 ## 前提
 
-- `go 1.2.40` がインストールされていること
+- `go 1.24.0` がインストールされていること
 - `docker` がインストールされていること
 
 ## 初回のみ
@@ -29,6 +29,14 @@ go install github.com/google/wire/cmd/wire@latest
 
 ```sh
 cp .env.example .env
+```
+
+### OpenAI APIの設定
+
+`.env`ファイルにOpenAIのAPI Keyを設定
+
+```
+OPENAI_API_KEY=<ここにAPIKEYを入力>
 ```
 
 ## 実行

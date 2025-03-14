@@ -59,4 +59,6 @@ func setRouting(app *echo.Echo) {
 
 	auth.POST("/posts", handlerSet.PostHandler.Create)
 	auth.POST("/posts/:postId/likes", handlerSet.PostHandler.Like)
+
+	auth.POST("/novels/generate", handlerSet.NovelHandler.Generate)
 }
