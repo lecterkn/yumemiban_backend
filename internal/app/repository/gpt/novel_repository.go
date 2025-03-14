@@ -50,7 +50,7 @@ func (r *NovelRepositoryImpl) GenerateNovel(content string) (*string, error) {
 func (r *NovelRepositoryImpl) getSystemPrompt() string {
 	return `
         あなたは短編小説家です
-        夢の内容から小説を考えてください
+        夢の内容を一つの短い物語に作り替えます
         あなたは100文字程度の簡潔な小説を執筆します
     `
 }

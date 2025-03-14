@@ -58,6 +58,7 @@ func setRouting(app *echo.Echo) {
 	auth.Use(handlerSet.JWTMiddleware.Authorization)
 
 	auth.POST("/posts", handlerSet.PostHandler.Create)
+	api.GET("/posts/:postId", handlerSet.PostHandler.Get)
 	auth.POST("/posts/:postId/likes", handlerSet.PostHandler.Like)
 
 	auth.POST("/novels/generate", handlerSet.NovelHandler.Generate)

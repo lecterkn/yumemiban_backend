@@ -115,6 +115,32 @@ const docTemplate = `{
                 }
             }
         },
+        "/posts/{postId}": {
+            "get": {
+                "description": "投稿詳細を取得する",
+                "tags": [
+                    "post"
+                ],
+                "summary": "GetPost",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "投稿ID",
+                        "name": "postId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.PostResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/posts/{postId}/likes": {
             "post": {
                 "security": [
@@ -268,6 +294,45 @@ const docTemplate = `{
             }
         },
         "response.PostCreateResponse": {
+            "type": "object",
+            "required": [
+                "content",
+                "createdAt",
+                "id",
+                "nickname",
+                "novel",
+                "title",
+                "updatedAt",
+                "userId"
+            ],
+            "properties": {
+                "content": {
+                    "type": "string"
+                },
+                "createdAt": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "string"
+                },
+                "nickname": {
+                    "type": "string"
+                },
+                "novel": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "updatedAt": {
+                    "type": "string"
+                },
+                "userId": {
+                    "type": "string"
+                }
+            }
+        },
+        "response.PostResponse": {
             "type": "object",
             "required": [
                 "content",
