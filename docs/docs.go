@@ -43,6 +43,42 @@ const docTemplate = `{
                 }
             }
         },
+        "/novels/generate": {
+            "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
+                "description": "小説を生成する",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "novel"
+                ],
+                "summary": "GenerateNovel",
+                "parameters": [
+                    {
+                        "description": "小説生成リクエスト",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/request.NovelGenerateRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/response.NovelGenerateResponse"
+                        }
+                    }
+                }
+            }
+        },
         "/posts": {
             "post": {
                 "security": [
@@ -129,6 +165,17 @@ const docTemplate = `{
         }
     },
     "definitions": {
+        "request.NovelGenerateRequest": {
+            "type": "object",
+            "required": [
+                "content"
+            ],
+            "properties": {
+                "content": {
+                    "type": "string"
+                }
+            }
+        },
         "request.PostCreateRequest": {
             "type": "object",
             "required": [
@@ -205,6 +252,17 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "userId": {
+                    "type": "string"
+                }
+            }
+        },
+        "response.NovelGenerateResponse": {
+            "type": "object",
+            "required": [
+                "novel"
+            ],
+            "properties": {
+                "novel": {
                     "type": "string"
                 }
             }

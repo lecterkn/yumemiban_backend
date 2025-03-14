@@ -11,6 +11,7 @@ import (
 	"github.com/lecterkn/yumemiban_backend/internal/app/database"
 	"github.com/lecterkn/yumemiban_backend/internal/app/handler"
 	"github.com/lecterkn/yumemiban_backend/internal/app/provider"
+	"github.com/lecterkn/yumemiban_backend/internal/app/repository/gpt"
 	"github.com/lecterkn/yumemiban_backend/internal/app/repository/mysql"
 	"github.com/lecterkn/yumemiban_backend/internal/app/repository/redis"
 	"github.com/lecterkn/yumemiban_backend/internal/app/usecase"
@@ -32,11 +33,16 @@ func InitializeHandlerSet() *HandlerSet {
 	postHandler := handler.NewPostHandler(postUsecase)
 	discoverUsecase := usecase.NewDiscoverUsecase(postRepository)
 	discoverHandler := handler.NewDiscoverHandler(discoverUsecase)
+	openaiClient := database.GetChatGPTClient()
+	novelRepository := gpt.NewNovelRepositoryImpl(openaiClient)
+	novelUsecase := usecase.NewNovelUsecase(novelRepository)
+	novelHandler := handler.NewNovelHandler(novelUsecase)
 	jwtMiddleware := handler.NewJWTMiddleware()
 	diHandlerSet := &HandlerSet{
 		UserHandler:     userHandler,
 		PostHandler:     postHandler,
 		DiscoverHandler: discoverHandler,
+		NovelHandler:    novelHandler,
 		JWTMiddleware:   jwtMiddleware,
 	}
 	return diHandlerSet
@@ -45,24 +51,25 @@ func InitializeHandlerSet() *HandlerSet {
 // wire.go:
 
 // データベースのコネクタ
-var databaseSet = wire.NewSet(database.GetMySQLConnection, database.GetRedisClient)
+var databaseSet = wire.NewSet(database.GetMySQLConnection, database.GetRedisClient, database.GetChatGPTClient)
 
 // リポジトリの実装
-var repositorySet = wire.NewSet(mysql.NewUserRepositoryImpl, mysql.NewPostRepositoryImpl, redis.NewTokenRepositoryImpl)
+var repositorySet = wire.NewSet(mysql.NewUserRepositoryImpl, mysql.NewPostRepositoryImpl, redis.NewTokenRepositoryImpl, gpt.NewNovelRepositoryImpl)
 
 // プロバイダの実装
 var providerSet = wire.NewSet(provider.NewTransactionProviderImpl)
 
 // ユースケース
-var usecaseSet = wire.NewSet(usecase.NewUserUsecase, usecase.NewPostUsecase, usecase.NewDiscoverUsecase)
+var usecaseSet = wire.NewSet(usecase.NewUserUsecase, usecase.NewPostUsecase, usecase.NewNovelUsecase, usecase.NewDiscoverUsecase)
 
 // ハンドラ
-var handlerSet = wire.NewSet(handler.NewUserHandler, handler.NewPostHandler, handler.NewDiscoverHandler, handler.NewJWTMiddleware)
+var handlerSet = wire.NewSet(handler.NewUserHandler, handler.NewPostHandler, handler.NewNovelHandler, handler.NewDiscoverHandler, handler.NewJWTMiddleware)
 
 // 生成されるハンドラ
 type HandlerSet struct {
 	UserHandler     *handler.UserHandler
 	PostHandler     *handler.PostHandler
 	DiscoverHandler *handler.DiscoverHandler
+	NovelHandler    *handler.NovelHandler
 	JWTMiddleware   *handler.JWTMiddleware
 }
