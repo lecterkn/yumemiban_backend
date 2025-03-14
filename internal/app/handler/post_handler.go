@@ -21,13 +21,14 @@ func NewPostHandler(postUsecase *usecase.PostUsecase) *PostHandler {
 	}
 }
 
-// @summary		CreatePost
-// @description	投稿を新規作成する
-// @tags			post
-// @produce		json
-// @param			request	body		request.PostCreateRequest	true	"投稿作成リクエスト"
-// @success		200		{object}	response.PostCreateResponse
-// @router			/posts [post]
+//	@summary		CreatePost
+//	@description	投稿を新規作成する
+//	@tags			post
+//	@produce		json
+//	@param			request	body		request.PostCreateRequest	true	"投稿作成リクエスト"
+//	@success		200		{object}	response.PostCreateResponse
+//	@router			/posts [post]
+//	@security		BearerAuth
 func (h *PostHandler) Create(ctx echo.Context) error {
 	// 投稿作成リクエスト取得
 	postCreateRequest := request.PostCreateRequest{}
@@ -56,12 +57,13 @@ func (h *PostHandler) Create(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, response.PostCreateResponse(*output))
 }
 
-// @summary		LikePost
-// @description	投稿にいいねをつける
-// @tags			post
-// @param			postId	path	string	true	"投稿ID"
-// @success		204
-// @router			/posts/{postId}/likes [post]
+//	@summary		LikePost
+//	@description	投稿にいいねをつける
+//	@tags			post
+//	@param			postId	path	string	true	"投稿ID"
+//	@success		204
+//	@router			/posts/{postId}/likes [post]
+//	@security		BearerAuth
 func (h *PostHandler) Like(ctx echo.Context) error {
 	// ユーザーID取得
 	userId, err := uuid.Parse(ctx.Get("userId").(string))
