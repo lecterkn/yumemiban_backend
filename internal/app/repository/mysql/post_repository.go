@@ -24,7 +24,7 @@ func NewPostRepositoryImpl(database *sqlx.DB) port.PostRepository {
 func (r *PostRepositoryImpl) Create(ctx context.Context, postEntity *entity.PostEntity) error {
 	query := `
         INSERT INTO posts(id, user_id, nickname, title, content, novel, created_at, updated_at)
-        VALUES(:id, :userId, :nickname, :content, :title, :novel, :createdAt, :updatedAt)
+        VALUES(:id, :userId, :nickname, :title, :content, :novel, :createdAt, :updatedAt)
     `
 	return RunInTx(ctx, r.database, func(tx *sqlx.Tx) error {
 		_, err := tx.NamedExec(query, map[string]any{
