@@ -151,6 +151,8 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/response.PostCreateResponse'
+      security:
+      - BearerAuth: []
       summary: CreatePost
       tags:
       - post
@@ -166,6 +168,8 @@ paths:
       responses:
         "204":
           description: No Content
+      security:
+      - BearerAuth: []
       summary: LikePost
       tags:
       - post

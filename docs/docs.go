@@ -45,6 +45,11 @@ const docTemplate = `{
         },
         "/posts": {
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "投稿を新規作成する",
                 "produces": [
                     "application/json"
@@ -76,6 +81,11 @@ const docTemplate = `{
         },
         "/posts/{postId}/likes": {
             "post": {
+                "security": [
+                    {
+                        "BearerAuth": []
+                    }
+                ],
                 "description": "投稿にいいねをつける",
                 "tags": [
                     "post"
