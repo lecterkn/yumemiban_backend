@@ -46,7 +46,12 @@ func (h *PostHandler) Create(ctx echo.Context) error {
 	// 投稿作成
 	output, err := h.postUsecase.CreatePost(
 		userId,
-		input.PostUsecaseCreateInput(postCreateRequest),
+		input.PostUsecaseCreateInput{
+			Nickname: postCreateRequest.Nickname,
+			Title:    postCreateRequest.Title,
+			Content:  postCreateRequest.Content,
+			Novel:    postCreateRequest.Novel,
+		},
 	)
 	if err != nil {
 		return ctx.JSON(http.StatusInternalServerError, response.ErrorResponse{
